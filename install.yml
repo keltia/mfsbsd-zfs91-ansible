@@ -1,13 +1,15 @@
 ---
 # Main config
+
 - hosts: toinstall
   user: root
   roles:
 	- common
   vars:
+	disk: "da"
 	disks:
-	  - "da0"
-	  - "da1"
+	  - {{ disk }}0
+	  - {{ disk }}1
 	pool: "tank"
     compression: lzjb
 	tbase: //{{ pool }}/root

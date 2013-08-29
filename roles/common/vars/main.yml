@@ -1,0 +1,24 @@
+---
+	
+disk: "da"
+disks:
+- {{ disk }}0
+- {{ disk }}1
+pool: "tank"
+compression: lzjb
+tbase: /{{ pool }}/root
+fs:
+- {{ tbase }}/usr
+- {{ tbase }}/usr/local
+- {{ tbase }}/usr/ports
+- {{ tbase }}/usr/src
+- {{ tbase }}/var
+- {{ tbase }}/home
+- {{ tbase }}/home/staff
+- {{ tbase }}/jails	  
+svfs:
+- {{ tbase }}/var/empty
+- {{ tbase }}/var/run
+tfs:
+- {{ tbase }}/tmp
+- {{ tbase }}/var/tmp
