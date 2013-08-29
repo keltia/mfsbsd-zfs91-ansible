@@ -1,0 +1,49 @@
+---
+# Define the overall set of tasks
+
+- name: Wipe disks
+  command: dd if=/dev/zero of=/dev/{{ disk }}{{ item }} bs=512 count=10
+  with_items: {{ disks }}
+- name: Create GPT entry on disks
+  command: gpart create -s GPT {{ disk }}{{ item }}
+  with_items: {{ disks }}
+- name: Add bootblock partition
+  command: gpart add -s 64K -a 4k -t freebsd-boot {{ disk }}{{ item }}
+  with_items: {{ disks }}
+- name: Add zboot partition
+  command: gpart add -s 2G -a 4k -t freebsd-zfs -l boot{{ item }} {{ disk }}{{ item }}
+  with_items: {{ disks }}
+- name: Add swap partition
+  commnad: gpart add -s 32G -a 4k -t freebsd-swap -l swap{{ item }} {{ disk }}{{ item }}
+  with_items: {{ disks }}
+-name: Add main zfs pool {{ pool }}
+  command: gpart add -a 4k -t freebsd-zfs -l {{ pool }}{{ item }} {{ disk }}{{ item }}  
+  with_items: {{ disks }}
+- name: Add bootme property
+  command: gpart set -a bootme -i 2 {{ disk }}{{ item }}
+  with_items: {{ disks }}
+- name: Install bootblocks
+  command: gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 {{ disk }}{{ item }}
+  with_items: {{ disks }}
+- name: Create /root/keys to store GELI key
+  command: mkdir /root/keys
+- name: Generate GELI key
+  command: dd if=/dev/random of=/root/keys/boot.key bs=128k count=1
+- name: Create GELI parts
+  command: geli init -b -K /root/keys/boot.key -s 4096 -l 256 gpt/{{ pool }}{{ item }} 
+  with_items: {{ disks }}
+- name: Attach GELI parts
+  command: geli attach -k /root/keys/boot.key gpt/{{ pool }}{{ item }}
+  with_items: {{ disks }}
+- name: Create zpool for boot
+  command: zpool create {{ bpool }} mirror gpt/boot0 gpt/boot1
+- name: Create zpool for storage
+  command: zpool create {{ pool }} mirror gpt/{{ pool }}0 gpt/{{ pool }}1
+- name: Create mirror for swap
+  command: gmirror label swap gpt/swap0 gpt/swap1
+- name: Set checksum
+  command: zfs set checksum=fletcher4 zboot
+  with_items: [{{ zboot}}, {{ pool }}]
+- name: Create FS on tank
+- name: Extract dists
+- name: Fixup config
