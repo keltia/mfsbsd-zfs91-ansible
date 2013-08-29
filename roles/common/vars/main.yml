@@ -2,8 +2,9 @@
 	
 disk: "da"
 disks:
-- {{ disk }}0
-- {{ disk }}1
+- 0
+- 1
+bpool: "zboot"
 pool: "tank"
 compression: lzjb
 tbase: /{{ pool }}/root
