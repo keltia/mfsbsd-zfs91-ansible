@@ -1,25 +1,30 @@
 ---
-	
+# Variables
+
 disk: "da"
 disks:
 - 0
 - 1
 bpool: "zboot"
+lpool: "boot"
 pool: "tank"
-compression: lzjb
-tbase: /{{ pool }}/root
+compression: "lz4"
+tbase: "/{{ pool }}/root"
 fs:
-- {{ tbase }}/usr
-- {{ tbase }}/usr/local
-- {{ tbase }}/usr/ports
-- {{ tbase }}/usr/src
-- {{ tbase }}/var
-- {{ tbase }}/home
-- {{ tbase }}/home/staff
-- {{ tbase }}/jails	  
+- "{{ tbase }}/usr"
+- "{{ tbase }}/usr/local"
+- "{{ tbase }}/usr/ports"
+- "{{ tbase }}/usr/src"
+- "{{ tbase }}/var"
+- "{{ tbase }}/home"
+- "{{ tbase }}/home/staff"
+- "{{ tbase }}/jails"
 svfs:
-- {{ tbase }}/var/empty
-- {{ tbase }}/var/run
+- "{{ tbase }}/var/db"
+- "{{ tbase }}/var/empty"
+- "{{ tbase }}/var/pkg"
+- "{{ tbase }}/var/run"
+- "{{ tbase }}/var/tmp"
 tfs:
-- {{ tbase }}/tmp
-- {{ tbase }}/var/tmp
+- "{{ tbase }}/tmp"
+- "{{ tbase }}/var/tmp"
