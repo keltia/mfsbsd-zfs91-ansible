@@ -2,9 +2,11 @@
 # Kernel modules loading
 
 - name: Fetch missing kernel modules
-  get_url url={{ kurl }} dest="/tmp/" 
+  get_url: url={{ kurl }} dest="/tmp/"
+    creates="/tmp/kernel.txz"
 - name: Extract modules
-  command: tar -C /tmp xfj /tmp/kernel.txz
+  command: tar -C /tmp -xjf /tmp/kernel.txz
+    creates="/tmp/boot/kernel/kernel"
 - name: Load various needed modules
-  command: kldload /tmp/boot/kernel/{{ item }}.ko
+  command: kldload -n -q /tmp/boot/kernel/{{ item }}.ko
   with_items: kmods
