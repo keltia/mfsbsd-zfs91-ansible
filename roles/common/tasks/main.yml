@@ -6,12 +6,7 @@
 - include: disk.yml
 - include: keys.yml
 - include: geli.yml
-- name: Create zpool for boot
-  command: zpool create {{ bpool }} mirror gpt/{{ lpool }}0 gpt/{{ lpool }}1
-    creates="/{{ bpool }}"
-- name: Create zpool for storage
-  command: zpool create {{ pool }} mirror gpt/{{ pool }}0.eli gpt/{{ pool }}1.eli
-    creates="/{{ pool }}"
+- include: pools.yml
 - name: Create mirror for swap
   command: gmirror label swap gpt/swap0 gpt/swap1
 - name: Set checksum

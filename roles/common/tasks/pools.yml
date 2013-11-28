@@ -1,0 +1,9 @@
+---
+# Manage zpools
+
+- name: Create zpool for boot
+  command: zpool create {{ bpool }} mirror gpt/{{ lpool }}0 gpt/{{ lpool }}1
+    creates="/{{ bpool }}"
+- name: Create zpool for storage
+  command: zpool create {{ pool }} mirror gpt/{{ pool }}0.eli gpt/{{ pool }}1.eli
+    creates="/{{ pool }}"
