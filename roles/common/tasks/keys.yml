@@ -1,0 +1,9 @@
+---
+# Create keys
+
+- name: Create /root/keys to store GELI key
+  command: mkdir /root/keys
+    creates="/root/keys"
+- name: Generate GELI key
+  command: dd if=/dev/random of=/root/keys/boot.key bs=128k count=1
+    creates="/root/keys/boot.key"

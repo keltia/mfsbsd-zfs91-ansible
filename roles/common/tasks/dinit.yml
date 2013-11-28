@@ -1,0 +1,9 @@
+---
+# Low-level disk init
+
+- name: Wipe disks
+  command: dd if=/dev/zero of=/dev/{{ disk }}{{ item }} bs=512 count=10
+  with_items: disks
+- name: Create GPT entry on disks
+  command: gpart create -s GPT {{ disk }}{{ item }}
+  with_items: disks

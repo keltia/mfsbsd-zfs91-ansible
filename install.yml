@@ -4,4 +4,4 @@
 - hosts: toinstall
   user: root
   roles:
-	- common
+  - common

@@ -1,0 +1,25 @@
+---
+# handle one disk
+
+- name: Add bootblock partition
+  command: gpart add -s 64K -a 4k -t freebsd-boot {{ disk }}{{ item }}
+    creates="/dev/{{ disk }}{{ item }}p1"
+  with_items: disks
+- name: Add boot ZFS partition
+  command: gpart add -s 2G -a 4k -t freebsd-zfs -l boot{{ item }} {{ disk }}{{ item }}
+    creates="/dev/{{ disk }}{{ item }}p2"
+  with_items: disks
+- name: Add swap partition
+  command: gpart add -s 32G -a 4k -t freebsd-swap -l swap{{ item }} {{ disk }}{{ item }}
+    creates="/dev/{{ disk }}{{ item }}p3"
+  with_items: disks
+- name: Add main zfs pool {{ pool }}
+  command: gpart add -a 4k -t freebsd-zfs -l {{ pool }}{{ item }} {{ disk }}{{ item }}  
+    creates="/dev/{{ disk }}{{ item }}p4"
+  with_items: disks
+- name: Add bootme property
+  command: gpart set -a bootme -i 2 {{ disk }}{{ item }}
+  with_items: disks
+- name: Install bootblocks
+  command: gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 {{ disk }}{{ item }}
+  with_items: disks

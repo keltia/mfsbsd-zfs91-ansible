@@ -1,0 +1,10 @@
+---
+# GELI partition management
+
+- name: Create GELI parts
+  command: geli init -b -K /root/keys/boot.key -s 4096 -l 256 gpt/{{ pool }}{{ item }}
+    creates="/dev/gpt/gpt/{{ pool }}{{ item }}.eli"
+  with_items: disks
+- name: Attach GELI parts
+  command: geli attach -k /root/keys/boot.key gpt/{{ pool }}{{ item }}
+  with_items: disks
