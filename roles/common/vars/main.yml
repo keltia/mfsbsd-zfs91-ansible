@@ -1,10 +1,21 @@
 ---
 # Variables
 
+release: "9.2-RELEASE"
 disk: "da"
 disks:
 - 0
 - 1
+kmods:
+- "zlib"
+- "crypto"
+- "aesni"
+- "geom_eli"
+- "geom_mirror"
+- "geom_label"
+- "zfs"
+kurl: "ftp://ftp.fr.freebsd.org/pub/FreeBSD/releases/amd64/amd64/{{ release }}/kernel.txz"
+passfile: "/tmp/geli_pwd"
 bpool: "zboot"
 lpool: "boot"
 pool: "tank"

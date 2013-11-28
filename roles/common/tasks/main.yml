@@ -1,6 +1,7 @@
 ---
 # Define the overall set of tasks
 
+- include: kernel.yml
 - include: dinit.yml
 - include: disk.yml
 - include: keys.yml
