@@ -1,7 +1,7 @@
 ---
 # Main config
 
-- hosts: toinstall
+- hosts: dedibox
   user: root
   vars_prompt:
     - name: "geli_pwd"
