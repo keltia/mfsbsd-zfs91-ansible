@@ -1,10 +1,10 @@
 ---
 # GELI partition management
 
-- var_prompt:
-- name: "geli_pwd"
-  prompt: "GELI passphrase"
-  private: yes
+var_prompt:
+  - name: "geli_pwd"
+    prompt: "GELI passphrase"
+    private: yes
 - name: Save passphrase
   command: echo {{ geli_pwd }} >/tmp/geli_pwd
     creates="/tmp/geli_pwd"
