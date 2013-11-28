@@ -1,20 +1,16 @@
 ---
 # GELI partition management
 
-var_prompt:
-  - name: "geli_pwd"
-    prompt: "GELI passphrase"
-    private: yes
 - name: Save passphrase
-  command: echo {{ geli_pwd }} >/tmp/geli_pwd
-    creates="/tmp/geli_pwd"
+  shell: echo {{ geli_pwd }} >{{ passfile }}
+    creates="{{ passfile }}"
 - name: Create GELI parts
-  command: geli init -b -K /root/keys/boot.key -J /tmp/geli_pwd -s 4096 -l 256 gpt/{{ pool }}{{ item }}
+  command: geli init -b -K /root/keys/boot.key -J {{ passfile }} -s 4096 -l 256 gpt/{{ pool }}{{ item }}
     creates="/dev/gpt/gpt/{{ pool }}{{ item }}.eli"
   with_items: disks
 - name: Attach GELI parts
-  command: geli attach  -j /tmp/geli_pwd -k /root/keys/boot.key gpt/{{ pool }}{{ item }}
+  command: geli attach  -j {{ passfile }} -k /root/keys/boot.key gpt/{{ pool }}{{ item }}
   with_items: disks
 - name: Remove passfile
-  command: rm -f /tmp/geli_pwd
+  command: rm -f {{ passfile }}
   
