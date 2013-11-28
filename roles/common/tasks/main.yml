@@ -10,16 +10,21 @@
   command: zpool create {{ bpool }} mirror gpt/{{ lpool }}0 gpt/{{ lpool }}1
     creates="/{{ bpool }}"
 - name: Create zpool for storage
-  command: zpool create {{ pool }} mirror gpt/{{ pool }}0 gpt/{{ pool }}1
+  command: zpool create {{ pool }} mirror gpt/{{ pool }}0.eli gpt/{{ pool }}1.eli
     creates="/{{ pool }}"
 - name: Create mirror for swap
   command: gmirror label swap gpt/swap0 gpt/swap1
 - name: Set checksum
   command: zfs set checksum=fletcher4 {{ item }}
-  with_items: [ zboot, pool ]
+  with_items:
+    - bpool
+    - pool
 - name: Create FS on tank
   command: echo creating {{ item }}
-  with_items: [ fs, svfs, tfs ]
+  with_items:
+    - fs
+    - svfs
+    - tfs
 - name: Extract dists
   command: echo dists
 - name: Fixup config
