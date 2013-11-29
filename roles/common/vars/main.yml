@@ -31,9 +31,14 @@ fs:
 svfs:
 - "{{ tbase }}/var/db"
 - "{{ tbase }}/var/empty"
-- "{{ tbase }}/var/pkg"
+- "{{ tbase }}/var/db/pkg"
 - "{{ tbase }}/var/run"
 - "{{ tbase }}/var/tmp"
 tfs:
 - "{{ tbase }}/tmp"
 - "{{ tbase }}/var/tmp"
+nocomp:
+- "{{ tbase }}/root"
+- "{{ tbase }}/usr/ports/distfiles"
+- "{{ tbase }}/usr/ports/packages"
+
