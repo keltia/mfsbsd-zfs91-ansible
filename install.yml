@@ -3,9 +3,5 @@
 
 - hosts: dedibox
   remote_user: root
-  vars_prompt:
-    - name: "geli_pwd"
-      prompt: "GELI passphrase"
-      private: yes
   roles:
   - common

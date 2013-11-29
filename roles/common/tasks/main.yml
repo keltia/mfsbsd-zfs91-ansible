@@ -6,6 +6,10 @@
 - include: disk.yml
 - include: keys.yml
 - include: geli.yml
+  vars_prompt:
+    - name: "geli_pwd"
+      prompt: "GELI passphrase"
+      private: yes
 - include: pools.yml
 - name: Create mirror for swap
   command: gmirror label swap gpt/swap0 gpt/swap1
