@@ -13,11 +13,6 @@
 - include: pools.yml
 - name: Create mirror for swap
   command: gmirror label swap gpt/swap0 gpt/swap1
-- name: Set checksum
-  command: zfs set checksum=fletcher4 {{ item }}
-  with_items:
-    - bpool
-    - pool
 - name: Create FS on tank
   command: echo creating {{ item }}
   with_items:

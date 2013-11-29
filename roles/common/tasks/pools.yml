@@ -7,3 +7,8 @@
 - name: Create zpool for storage
   command: zpool create {{ pool }} mirror gpt/{{ pool }}0.eli gpt/{{ pool }}1.eli
     creates="/{{ pool }}"
+- name: Set checksum
+  command: zfs set checksum=fletcher4 {{ item }}
+  with_items:
+    - bpool
+    - pool
