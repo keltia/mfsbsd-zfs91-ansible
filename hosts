@@ -1,2 +1,2 @@
 [dedibox]
-next.keltia.net:22
+next.keltia.net ansible_ssh_user=root
