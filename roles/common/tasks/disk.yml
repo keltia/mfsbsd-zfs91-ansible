@@ -1,7 +1,8 @@
 ---
 # handle one disk
 
-- name: Get gpart show {{ disk }}{{ item }}
+- name: Check partitions present
+  command: Get gpart show {{ disk }}{{ item }}
   register: gpart_show{{ item }}
   with_items: disks
 - name: Add bootblock partition
