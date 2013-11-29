@@ -1,5 +1,5 @@
 ---
-# handle one disk
+# handle disk partionning
 
 - name: Check partitions present
   command: Get gpart show {{ disk }}{{ item }}
