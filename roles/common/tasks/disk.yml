@@ -28,3 +28,4 @@
 - name: Install bootblocks
   command: gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 {{ disk }}{{ item }}
   with_items: disks
+  when: gpart_show{{ item }}.stdout.find("bootme") == -1
