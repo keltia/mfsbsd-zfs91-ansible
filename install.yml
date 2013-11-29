@@ -2,7 +2,7 @@
 # Main config
 
 - hosts: dedibox
-  user: root
+  remote_user: root
   vars_prompt:
     - name: "geli_pwd"
       prompt: "GELI passphrase"
