@@ -2,13 +2,13 @@
 # Low-level disk init
 
 - name: Check if we need to wipe them
-  shell: gpart show
-  register: gpartout
+  command: /sbin/gpart show
+  register: gpart
 - name: Wipe disks
-  command: dd if=/dev/zero of=/dev/{{ disk }}{{ item }} bs=512 count=10
+  command: dd if=/dev/zero of="/dev/{{ disk }}{{ item }}" bs=512 count=10
+  when: gpart.stdout.find("{{ disk }}{{ item }}") == -1
   with_items: disks
-  when: gpartout.stdout.find("{{ disk }}{{ item }}") == -1
 - name: Create GPT entry on disks
   command: gpart create -s GPT {{ disk }}{{ item }}
+  when: gpart.stdout.find("{{ disk }}{{ item }}") == -1
   with_items: disks
-  when: gpartout.stdout.find("{{ disk }}{{ item }}") == -1
