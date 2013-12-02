@@ -12,13 +12,7 @@
       private: yes
 - include: pools.yml
 - include: swap.yml
-- name: Create FS on tank
-  command: echo creating {{ item }}
-  with_items:
-    - fs
-    - svfs
-    - tfs
-- name: Extract dists
-  command: echo dists
+- include: fs.yml
+- include: dists.yml
 - name: Fixup config
   command: echo config
