@@ -1,0 +1,25 @@
+---
+# Create the various datasets according to their properties
+
+- name: Enable compression by default
+  command: zfs set compression={{ compression }} {{ pool }}
+- name: Create root fs
+  zfs: name={{ rootfs }} compression=off state=present
+- name: Create base fs
+  zfs: name={{ pool }}/{{ item }} state=present mountpoint=/{{ rootfs }}/{{item }}
+  with_items: basefs 
+- name: Create special fs
+  zfs: name={{ pool }}/{{ item }} state=present mountpoint=/{{ rootfs }}/{{item }}
+       exec=off setuid=off
+  with_items: spfs
+- name: Create tmp fs
+  zfs: name={{ pool }}/{{ item }} state=present mountpoint=/{{ rootfs }}/{{item }}
+       exec=off setuid=off
+- name: Change rights on tmp fs
+  command: chmod 1777 {{ pool }}/{{ item }}
+  with_items: tmpfs
+- name: Create fs w/o compression
+  zfs: name={{ pool }}/{{ item }} state=present mountpoint=/{{ rootfs }}/{{item }}
+       compression=off
+  with_items: nocompfs
+
