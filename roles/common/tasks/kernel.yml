@@ -2,7 +2,7 @@
 # Kernel modules loading
 
 - name: Fetch missing kernel modules
-  get_url: url={{ kurl }} dest="/tmp/"
+  get_url: url="{{ base_url }}/kernel.txz" dest="/tmp/"
     creates="/tmp/kernel.txz"
 - name: Extract modules
   command: tar -C /tmp -xjf /tmp/kernel.txz
