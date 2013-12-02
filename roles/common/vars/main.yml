@@ -18,27 +18,32 @@ bpool: "zboot"
 lpool: "boot"
 pool: "tank"
 compression: "lz4"
-tbase: "/{{ pool }}/root"
-fs:
-- "{{ tbase }}/usr"
-- "{{ tbase }}/usr/local"
-- "{{ tbase }}/usr/ports"
-- "{{ tbase }}/usr/src"
-- "{{ tbase }}/var"
-- "{{ tbase }}/home"
-- "{{ tbase }}/home/staff"
-- "{{ tbase }}/jails"
-svfs:
-- "{{ tbase }}/var/db"
-- "{{ tbase }}/var/empty"
-- "{{ tbase }}/var/db/pkg"
-- "{{ tbase }}/var/run"
-- "{{ tbase }}/var/tmp"
-tfs:
-- "{{ tbase }}/tmp"
-- "{{ tbase }}/var/tmp"
-nocomp:
-- "{{ tbase }}/root"
-- "{{ tbase }}/usr/ports/distfiles"
-- "{{ tbase }}/usr/ports/packages"
-
+rootfs: "{{ pool }}/root"
+basefs:
+- "usr"
+- "var"
+- "home"
+- "jails"
+- "home/staff"
+- "usr/local"
+- "usr/ports"
+- "usr/src"
+- "var/db"
+- "var/db/pkg"
+- "var/log"
+spfs:
+- "var/empty"
+- "var/named"
+- "var/run"
+tmpfs:
+- "tmp"
+- "var/tmp"
+nocompfs:
+- "usr/ports/distfiles"
+- "usr/ports/packages"
+dists:
+- base
+- doc
+- games
+- kernel
+- lib32
