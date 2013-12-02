@@ -1,0 +1,6 @@
+---
+# Swap management
+
+- name: Create mirror for swap
+  command: gmirror label swap gpt/swap0 gpt/swap1
+    creates=/dev/gpt/swap
