@@ -12,7 +12,7 @@ kmods:
 - "geom_eli"
 - "geom_mirror"
 - "zfs"
-kurl: "ftp://ftp.fr.freebsd.org/pub/FreeBSD/releases/amd64/amd64/{{ release }}/kernel.txz"
+base_url: "ftp://ftp.fr.freebsd.org/pub/FreeBSD/releases/{{ ansible_architecture }}/{{ ansible_architecture }}/{{ release }}"
 passfile: "/tmp/geli_pwd"
 bpool: "zboot"
 lpool: "boot"
