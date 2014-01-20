@@ -1,7 +1,7 @@
 ---
 # Variables
 
-release: "9.2-RELEASE"
+release: "10.0-RELEASE"
 disk: "da"
 disks:
 - 0
