@@ -1,0 +1,12 @@
+#{{ ansible_managed }}
+
+zfs_enable="YES"
+sshd_enable="YES"
+hostname="{{ hostname }}.keltia.net"
+ntpd_enable="YES"
+ntpd_sync_on_start="YES"
+# or ifconfig_em0="DHCP"
+ifconfig_{{ ansible_default_ipv4.interface }}="inet {{ ipaddr }} netmask 0xffffff00"   # or "DHCP"
+geli_swap_flags="-e aes -l 256 -s 4096 -d"
+
+# ports section

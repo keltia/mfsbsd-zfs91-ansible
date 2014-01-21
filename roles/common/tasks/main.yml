@@ -10,5 +10,9 @@
 - include: swap.yml
 - include: fs.yml
 - include: dists.yml
-- name: Fixup config
-  command: echo config
+- include: config.yml
+  vars_prompt:
+    - name: "hostname"
+      prompt: "Hostname"
+    - name: "ipaddr"
+      prompt: "IPv4"

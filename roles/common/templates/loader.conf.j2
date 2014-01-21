@@ -1,0 +1,34 @@
+#{{ ansible_managed }}
+
+# fs modules
+zfs_load="YES"
+geom_mirror_load="YES"
+fdescfs_load="YES"
+nullfs_load="YES"
+
+# Crypto stuff
+geom_eli_load="YES"
+crypto_load="YES"
+aesni_load="YES"
+cryptodev_load="YES"
+
+# pf stuff
+pf_load="YES"
+pflog_load="YES"
+
+# tuning
+vm.kmem_size="32G"
+
+vfs.root.mountfrom="zfs:{{ rootfs }}"
+
+kern.geom.eli.visible_passphrase="1"
+
+# http://lists.freebsd.org/pipermail/freebsd-stable/2011-February/061388.html
+vfs.zfs.txg.timeout="5"
+
+geli_{{ disk }}0p4_keyfile0_load="YES"
+geli_{{ disk }}0p4_keyfile0_type="{{ disk }}0p4:geli_keyfile0"
+geli_{{ disk }}0p4_keyfile0_name="/boot/keys/boot.key"
+geli_{{ disk }}1p4_keyfile0_load="YES"
+geli_{{ disk }}1p4_keyfile0_type="{{ disk }}1p4:geli_keyfile0"
+geli_{{ disk }}1p4_keyfile0_name="/boot/keys/boot.key"
