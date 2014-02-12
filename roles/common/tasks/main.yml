@@ -11,8 +11,3 @@
 - include: fs.yml
 - include: dists.yml
 - include: config.yml
-  vars_prompt:
-    - name: "hostname"
-      prompt: "Hostname"
-    - name: "ipaddr"
-      prompt: "IPv4"

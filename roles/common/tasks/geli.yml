@@ -2,10 +2,6 @@
 # GELI partition management
 
 - name: Save passphrase
-  vars_prompt:
-    - name: "geli_pwd"
-      prompt: "GELI passphrase"
-      private: yes
   shell: echo {{ geli_pwd }} >{{ passfile }}
     creates="{{ passfile }}"
 - name: Create GELI parts

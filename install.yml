@@ -5,3 +5,11 @@
   remote_user: root
   roles:
   - common
+  vars_prompt:
+  - name: "hostname"
+    prompt: "Hostname"
+  - name: "ipaddr"
+    prompt: "IPv4"
+  - name: "geli_pwd"
+    prompt: "GELI passphrase"
+    private: yes

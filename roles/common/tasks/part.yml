@@ -6,9 +6,9 @@
   always_run: yes
 - name: Wipe disks if needed
   command: dd if=/dev/zero of="/dev/{{ disk }}{{ item }}" bs=512 count=10
-  when: gpart.stdout.find('{{ disk }}{{ item }}') != -1
+  when: gpart.stdout.find('{{ disk }}{{ item }}') == -1
   with_items: disks
 - name: Create GPT entry on disks
   command: gpart create -s GPT {{ disk }}{{ item }}
-  when: gpart.stdout.find('{{ disk }}{{ item }}') != -1
+  when: gpart.stdout.find('{{ disk }}{{ item }}') == -1
   with_items: disks
