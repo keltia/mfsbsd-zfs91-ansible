@@ -2,9 +2,10 @@
 # handle disk partionning
 
 - name: Check partitions present
-  command: Get gpart show {{ disk }}{{ item }}
+  shell: /sbin/gpart show {{ disk }}{{ item }}
   register: gpart_show{{ item }}
   with_items: disks
+  always_run: yes
 - name: Add bootblock partition
   command: gpart add -s 64K -a 4k -t freebsd-boot {{ disk }}{{ item }}
     creates="/dev/{{ disk }}{{ item }}p1"
@@ -21,11 +22,13 @@
   command: gpart add -a 4k -t freebsd-zfs -l {{ pool }}{{ item }} {{ disk }}{{ item }}  
     creates="/dev/{{ disk }}{{ item }}p4"
   with_items: disks
+- debug: msg="gpart_show0 = {{gpart_show0}}"
+- debug: msg="gpart_show1 = {{gpart_show1}}"
 - name: Add bootme property
   command: gpart set -a bootme -i 2 {{ disk }}{{ item }}
+  when: "gpart_show{{ item }}.stdout.find('bootme') == -1"
   with_items: disks
-  when: gpart_show{{ item }}.stdout.find("bootme") == -1
 - name: Install bootblocks
   command: gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 {{ disk }}{{ item }}
+  when: "gpart_show{{ item }}.stdout.find('bootme') == -1"
   with_items: disks
-  when: gpart_show{{ item }}.stdout.find("bootme") == -1
