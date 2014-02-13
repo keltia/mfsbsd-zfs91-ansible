@@ -3,7 +3,7 @@
 
 - name: Check partitions present
   shell: /sbin/gpart show {{ disk }}{{ item }}
-  register: gpart_show{{ item }}
+  register: gpart_show
   with_items: disks
   always_run: yes
 - name: Add bootblock partition
@@ -22,12 +22,15 @@
   command: gpart add -a 4k -t freebsd-zfs -l {{ pool }}{{ item }} {{ disk }}{{ item }}  
     creates="/dev/{{ disk }}{{ item }}p4"
   with_items: disks
-- debug: msg="gpart_show0 = {{gpart_show0}}"
-- debug: msg="gpart_show1 = {{gpart_show1}}"
-- name: Add bootme property
-  command: gpart set -a bootme -i 2 {{ disk }}{{ item }}
+- debug: msg="gpart_show = {{gpart_show}}"
+- name: Add bootme property on {{ disk }}0
+  command: gpart set -a bootme -i 2 {{ disk }}0
+  when: "{{ item.cmd }}.find('{{ disk }}0') and find('bootme') == -1"
+  with_items: gpart_show
+- name: Add bootme property on {{ disk }}1
+  command: gpart set -a bootme -i 2 {{ disk }}1
   when: "gpart_show{{ item }}.stdout.find('bootme') == -1"
-  with_items: disks
+  with_items: gpart_show.results
 - name: Install bootblocks
   command: gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 {{ disk }}{{ item }}
   when: "gpart_show{{ item }}.stdout.find('bootme') == -1"
