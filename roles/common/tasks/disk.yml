@@ -22,7 +22,6 @@
   command: gpart add -a 4k -t freebsd-zfs -l {{ pool }}{{ item }} {{ disk }}{{ item }}  
     creates="/dev/{{ disk }}{{ item }}p4"
   with_items: disks
-- debug: msg="gpart_show = {{gpart_show}}"
 - name: Add bootme property on {{ disk }}0
   command: gpart set -a bootme -i 2 {{ disk }}0
   when: "item.cmd.find('{{ disk }}0') and item.stdout.find('bootme') == -1"
