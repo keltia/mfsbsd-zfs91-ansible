@@ -9,8 +9,9 @@
     creates="/dev/gpt/{{ pool }}{{ item }}.eli"
   with_items: disks
 - name: Attach GELI parts
-  command: geli attach  -j {{ passfile }} -k /root/keys/boot.key gpt/{{ pool }}{{ item }}
+  command: geli attach  -j {{ passfile }} -k /root/keys/boot.key /dev/gpt/{{ pool }}{{ item }}
   with_items: disks
+  ignore_errors: True
 - name: Remove passfile
   command: rm -f {{ passfile }}
   
