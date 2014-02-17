@@ -10,5 +10,5 @@
 - name: Set checksum
   command: zfs set checksum=fletcher4 {{ item }}
   with_items:
-    - bpool
-    - pool
+    - {{ bpool }}
+    - {{ pool }}
