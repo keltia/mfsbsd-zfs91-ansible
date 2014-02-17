@@ -25,13 +25,12 @@
 - debug: msg="gpart_show = {{gpart_show}}"
 - name: Add bootme property on {{ disk }}0
   command: gpart set -a bootme -i 2 {{ disk }}0
-  when: "{{ item.cmd }}.find('{{ disk }}0') and find('bootme') == -1"
-  with_items: gpart_show
+  when: "item.cmd.find('{{ disk }}0') and item.stdout.find('bootme') == -1"
+  with_items: gpart_show.results
 - name: Add bootme property on {{ disk }}1
   command: gpart set -a bootme -i 2 {{ disk }}1
-  when: "gpart_show{{ item }}.stdout.find('bootme') == -1"
+  when: "item.cmd.find('{{ disk }}1') and item.stdout.find('bootme') == -1"
   with_items: gpart_show.results
 - name: Install bootblocks
   command: gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 {{ disk }}{{ item }}
-  when: "gpart_show{{ item }}.stdout.find('bootme') == -1"
   with_items: disks
