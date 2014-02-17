@@ -15,6 +15,7 @@
 - name: Create tmp fs
   zfs: name="{{ pool }}/{{ item }}" state=present mountpoint="/{{ rootfs }}/{{item }}"
        exec=off setuid=off
+  with_items: tmpfs
 - name: Change rights on tmp fs
   command: chmod 1777 "{{ pool }}/{{ item }}"
   with_items: tmpfs
