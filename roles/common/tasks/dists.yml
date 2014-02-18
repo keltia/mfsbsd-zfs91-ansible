@@ -3,8 +3,7 @@
 
 - name: Get dists files
   get_url: url="{{ base_url }}/{{ item }}.txz" dest="/tmp"
-    creates="/tmp/{{ item }}.txz"
   with_items: dists
 - name: Extract distribution files
-  command: tar -C {{ rootfs }} -xfj "/tmp/{{ item }}.txz"
+  command: "tar -C /{{ rootfs }} -xjf /tmp/{{ item }}.txz"
   with_items: dists
