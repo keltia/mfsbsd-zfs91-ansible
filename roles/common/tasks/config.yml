@@ -2,14 +2,14 @@
 # Post-installation configuration
 
 - name: Configure loader.conf
-  template: src=templates/loader.conf.j2
-      dest=/{{ rootfs }}/boot/loader.conf owner=0 group=0 mode=0644
+  template: src=loader.conf.j2
+      dest="/{{ rootfs }}/boot/loader.conf" owner=0 group=0 mode=0644
 - name: Configure rc.conf
-  template: src=templates/rc.conf.j2
+  template: src=rc.conf.j2
       dest="/{{ rootfs }}/etc/rc.conf" owner=0 group=0 mode=0644
 - name: Configure sysctl.conf
-  template: src=templates/sysctl.conf.j2
+  template: src=sysctl.conf.j2
       dest="/{{ rootfs }}/etc/sysctl.conf" owner=0 group=0 mode=0644
 - name: Configure fstab
-  template: src=templates/fstab.j2
+  template: src=fstab.j2
       dest="/{{ rootfs }}/etc/fstab" owner=0 group=0 mode=0644
