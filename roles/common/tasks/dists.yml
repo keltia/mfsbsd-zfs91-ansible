@@ -5,5 +5,6 @@
   get_url: url="{{ base_url }}/{{ item }}.txz" dest="/tmp"
   with_items: dists
 - name: Extract distribution files
-  command: "tar -C /{{ rootfs }} -xjf /tmp/{{ item }}.txz"
+  command: tar -C /{{ rootfs }} -xjf /tmp/{{ item }}.txz && touch /tmp/.{{ item }}.installed
+      creates="/tmp/.{{ item }}.installed"
   with_items: dists
