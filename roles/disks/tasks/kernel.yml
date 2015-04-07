@@ -9,3 +9,5 @@
 - name: Load various needed modules
   command: kldload -n -q /tmp/boot/kernel/{{ item }}.ko
   with_items: kmods
+- name: Force use of 4k sectors
+  command: sysctl vfs.zfs.min_auto_ashift=12
