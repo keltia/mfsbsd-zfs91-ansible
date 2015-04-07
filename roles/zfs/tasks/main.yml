@@ -1,0 +1,5 @@
+---
+# Define the overall set of tasks
+
+- include: pools.yml
+- include: fs.yml

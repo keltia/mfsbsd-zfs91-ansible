@@ -6,8 +6,3 @@
 - include: disk.yml
 - include: keys.yml
 - include: geli.yml
-- include: pools.yml
-- include: swap.yml
-- include: fs.yml
-- include: dists.yml
-- include: config.yml

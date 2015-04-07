@@ -1,0 +1,5 @@
+---
+# Define the overall set of tasks
+
+- include: dists.yml
+- include: config.yml
