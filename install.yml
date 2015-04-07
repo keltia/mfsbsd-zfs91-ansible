@@ -4,7 +4,9 @@
 - hosts: dedibox
   remote_user: root
   roles:
-  - common
+  - disks
+  - zfs
+  - install
   vars_prompt:
   - name: "hostname"
     prompt: "Hostname"
